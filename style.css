@@ -1,0 +1,63 @@
+/* @author victorpereirademelo */
+@charset "UTF-8";
+
+body{
+    background-color: rgb(31, 31, 31);
+}
+
+#mini-container{
+    margin: 50px auto;
+    max-width: 1150px;
+}
+
+#ajustar{
+    margin: 50px auto;
+    max-width: 1150px;
+}
+
+#container{
+    margin: 10px;
+}
+
+.separar{
+    margin: 5px;
+}
+
+.ellipse{
+    max-width: 130px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.imagemPerfil{
+    width: 25px;
+    border-radius: 20px;
+    height: 25px;
+}
+
+.riscar{
+    text-decoration: line-through;
+}
+
+.container{
+    display: flex;
+    justify-content: space-between;
+}
+
+.container__flex {
+    display: flex;
+    padding-right: 5px;
+}
+
+.logo{
+    font-family:cursive;
+    color: #008cff;
+    padding-left: 10px;
+    padding-top: 10px;
+}
+
+.ajustar-checkbox{
+    width: 18px;
+    height: 18px;
+}
