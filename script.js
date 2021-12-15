@@ -123,13 +123,31 @@ let dadosGuias = dados.guides;
 let dadosConvenio = dados.insurances;
 const checkbox = document.querySelectorAll('#checkbox').value;
 
-let acumulador = {};
+let acumulador = [];
 
 function selecionarUsuarios(valor){
 
-// REVIEW achar uma lógica para  terminar o Desafio
-acumulador.push(valor)
+if(!acumulador.includes(valor)){
+    acumulador.push(valor)
+    // console.log(acumulador);
+} else{
+    const a = acumulador.indexOf(valor);
+    acumulador.splice(a, 1);
+}
+// return acumulador;
 console.log(acumulador);
+
+// if(acumulador.includes(valor)){
+//     acumulador.unshift(valor);
+//     console.log(acumulador);
+// }
+// if(acumulador.includes(valor)){
+//     acumulador.shift(valor);
+//     acumulador
+// }
+
+// REVIEW achar uma lógica para  terminar o Desafio
+
 }
 
 const renderizacaoDeTabela = (guias) => {
