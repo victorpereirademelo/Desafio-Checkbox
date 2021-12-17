@@ -125,30 +125,20 @@ const checkbox = document.querySelectorAll('#checkbox').value;
 
 let acumulador = [];
 
-function selecionarUsuarios(valor){
+function selecionarUsuarios(valor) {
 
-if(!acumulador.includes(valor)){
-    acumulador.push(valor)
-    // console.log(acumulador);
-} else{
-    const a = acumulador.indexOf(valor);
-    acumulador.splice(a, 1);
-}
-// return acumulador;
-console.log(acumulador);
+    if (!acumulador.includes(valor)) {
+        acumulador.push(valor)
 
-// if(acumulador.includes(valor)){
-//     acumulador.unshift(valor);
-//     console.log(acumulador);
-// }
-// if(acumulador.includes(valor)){
-//     acumulador.shift(valor);
-//     acumulador
-// }
+    } else {
+        const a = acumulador.indexOf(valor);
+        acumulador.splice(a, 1);
+    }
+    console.log(acumulador);
 
-// REVIEW achar uma lógica para  terminar o Desafio
+    // NOTE achar uma lógica para  terminar o Desafio
 
-}
+};
 
 const renderizacaoDeTabela = (guias) => {
 
@@ -159,7 +149,7 @@ const renderizacaoDeTabela = (guias) => {
     guias.forEach(guia => {
         html += `
         <tr>
-        <td><input value="${guia.number}" type="checkbox" class="ajustar-checkbox" id="checkbox" onchange="selecionarUsuarios(${guia.number})"></td>
+        <td><input value="${acumulador}" type="checkbox" class="ajustar-checkbox" id="checkbox" onchange="selecionarUsuarios(${guia.number})"></td>
         <td>${new Date(guia.start_date).toLocaleDateString('pt-br')}</td>
         <td>${guia.number}</td>
         <td class="ellipse">
@@ -213,6 +203,11 @@ function filtrar() {
 
         let validacao;
 
+            if(acumulador == numero){
+                // guia.is_checked = true
+                validacao = true;
+            }
+
         if ((!buscaNormalizada && buscarConvenio) && (idGuia === ~~buscarConvenio)) {
             validacao = true;
         }
@@ -224,8 +219,10 @@ function filtrar() {
         if ((buscaNormalizada && buscarConvenio && idGuia === ~~buscarConvenio) && (nomeNormalizado.includes(buscaNormalizada) || numero.includes(buscaNormalizada))) {
             validacao = true;
         }
-        return validacao;
+        return validacao
     });
+
+    console.log(guiasFiltradas)
 
     renderizacaoDeTabela(guiasFiltradas);
 
