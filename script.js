@@ -129,10 +129,9 @@ function selecionarUsuarios(valor) {
 
     if (!acumulador.includes(valor)) {
         acumulador.push(valor)
-
     } else {
-        const a = acumulador.indexOf(valor);
-        acumulador.splice(a, 1);
+        const indice = acumulador.indexOf(valor);
+        acumulador.splice(indice, 1);
     }
     console.log(acumulador);
 
@@ -149,7 +148,7 @@ const renderizacaoDeTabela = (guias) => {
     guias.forEach(guia => {
         html += `
         <tr>
-        <td><input value="${acumulador}" type="checkbox" class="ajustar-checkbox" id="checkbox" onchange="selecionarUsuarios(${guia.number})"></td>
+        <td><input value="${guia.number}" ${acumulador.includes(parseInt(guia.number)) ? "checked" : "unchecked"} type="checkbox" class="ajustar-checkbox" id="checkbox" onchange="selecionarUsuarios(${guia.number})"></td>
         <td>${new Date(guia.start_date).toLocaleDateString('pt-br')}</td>
         <td>${guia.number}</td>
         <td class="ellipse">
@@ -201,97 +200,28 @@ function filtrar() {
         const idGuia = guia.insurane_id;
         const numero = guia.number;
 
-        let validacao;
-
-            if(acumulador == numero){
-                // guia.is_checked = true
-                validacao = true;
-            }
+        if (acumulador.includes(parseInt(numero))) {
+            return true;
+        }
 
         if ((!buscaNormalizada && buscarConvenio) && (idGuia === ~~buscarConvenio)) {
-            validacao = true;
+            return true;
         }
 
         if ((buscaNormalizada && !buscarConvenio) && (nomeNormalizado.includes(buscaNormalizada) || numero.includes(buscaNormalizada))) {
-            validacao = true;
+            return true;
         }
 
         if ((buscaNormalizada && buscarConvenio && idGuia === ~~buscarConvenio) && (nomeNormalizado.includes(buscaNormalizada) || numero.includes(buscaNormalizada))) {
-            validacao = true;
+            return true;
         }
-        return validacao
-    });
 
-    console.log(guiasFiltradas)
+        return false;
+    });
 
     renderizacaoDeTabela(guiasFiltradas);
 
 };
-
-// __________________________________________________________________________
-
-// let selecionados = {
-//     3210998321: true
-// }
-
-// selecionados.3210998321
-
-// selecionados[3210998321]
-
-// let selecionados = {
-//     3210998321: 'VICTOR'
-// }
-
-// selecionados
-
-// selecionados[3210998321]
-
-// let selecionados = {
-//     3210998321: 'VICTOR',
-//     nome: 'Aleson'
-// }
-
-// selecionados.nome
-
-// let nome2 = 'Renan'
-
-// selecionados.nome3 = 'Douglas'
-
-// selecionados
-
-// selecionados[nome2] = '123455'
-
-// selecionados
-
-// selecionados = {}
-
-// let numeroGuia = 3210998321
-
-// selecionados[numeroGuia] = true
-
-// selecionados
-
-// if (selecionados[3210998321]) {
-//     selecionados[3210998321] = !selecionados[3210998321]
-// }
-
-// selecionados[3210998321]
-
-// if (selecionados[3210998321]) {
-//     selecionados[3210998321] = !selecionados[3210998321]
-// }
-
-// selecionados[3210998321]
-
-// selecionados[3210998321] = !selecionados[3210998321]
-
-// selecionados
-
-// selecionados[287312832] = true
-
-// selecionados
-
-// let chave = 3210998321;
 
 
 
