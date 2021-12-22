@@ -126,18 +126,43 @@ const checkbox = document.querySelectorAll('#checkbox').value;
 let acumulador = [];
 
 function selecionarUsuarios(valor) {
-
     if (!acumulador.includes(valor)) {
         acumulador.push(valor)
     } else {
         const indice = acumulador.indexOf(valor);
         acumulador.splice(indice, 1);
     }
-    console.log(acumulador);
-
-    // NOTE achar uma lógica para  terminar o Desafio
-
 };
+function pagination (page, total, limit) {
+    var pageSize = Math.ceil(total/limit);
+
+    var _pagination = {
+        page: page,
+        total: total,
+        limit: limit,
+        pages: pageSize
+      };
+
+    if(page > 1){
+      var prev = page-1;
+      _pagination.previous = prev;
+    }
+
+    var remaining = total - (page * limit);
+
+    if(remaining > 0){
+      _pagination.next = page+1;
+    }
+
+    return _pagination;
+  }
+  var array = dados.guides;
+  var pageQuery = 1;
+  var page = parseInt(pageQuery) || 1;
+  var limit = 2;
+  var offset = (page - 1) * limit;
+  var total = array.length;
+  var items = array.slice(offset, offset+limit);
 
 const renderizacaoDeTabela = (guias) => {
 
@@ -153,14 +178,14 @@ const renderizacaoDeTabela = (guias) => {
         <td>${guia.number}</td>
         <td class="ellipse">
         <img class="imagemPerfil" src="${guia.patient.thumb_url || 'https://via.placeholder.com/150x150.jpg'}">
-            ${guia.patient.name}
+        ${guia.patient.name}
         </td>
         <td class="text-center ${guia.health_insurance.is_deleted ? "riscar" : ''}">
         ${guia.health_insurance.name}
         </td>
         <td class="text-end">${guia.price.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</td>
         </tr>
-             `
+        `
     });
 
     if (!guias.length) {
@@ -168,9 +193,14 @@ const renderizacaoDeTabela = (guias) => {
     };
     imprimirGuias.innerHTML = html;
 };
+renderizacaoDeTabela(items);
+// renderizacaoDeTabela(dadosGuias);
 
-renderizacaoDeTabela(dadosGuias);
+//-------------------------------------------------------Paginação--------------------------------------------------------------------------//
 
+// console.log(items);
+// console.log(pagination(page, total, limit));
+//------------------------------------------------------------------------------------------------------------------------------------------//
 const selecionarConvenio = (convenios) => {
 
     const imprimirConvenios = document.querySelector('#convenio')
@@ -192,7 +222,7 @@ function filtrar() {
     const buscaNormalizada = buscarGuia.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
 
     if (!buscaNormalizada && !buscarConvenio) {
-        return renderizacaoDeTabela(dadosGuias);
+        return renderizacaoDeTabela(items);
     }
 
     const guiasFiltradas = dadosGuias.filter(guia => {
