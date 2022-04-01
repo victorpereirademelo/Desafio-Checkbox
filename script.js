@@ -121,7 +121,6 @@ const dados = {
 
 let dadosGuias = dados.guides;
 let dadosConvenio = dados.insurances;
-const checkbox = document.querySelectorAll('#checkbox').value;
 
 let acumulador = [];
 
@@ -133,41 +132,10 @@ function selecionarUsuarios(valor) {
         acumulador.splice(indice, 1);
     }
 };
-function pagination (page, total, limit) {
-    var pageSize = Math.ceil(total/limit);
-
-    var _pagination = {
-        page: page,
-        total: total,
-        limit: limit,
-        pages: pageSize
-      };
-
-    if(page > 1){
-      var prev = page-1;
-      _pagination.previous = prev;
-    }
-
-    var remaining = total - (page * limit);
-
-    if(remaining > 0){
-      _pagination.next = page+1;
-    }
-
-    return _pagination;
-  }
-  var array = dados.guides;
-  var pageQuery = 1;
-  var page = parseInt(pageQuery) || 1;
-  var limit = 2;
-  var offset = (page - 1) * limit;
-  var total = array.length;
-  var items = array.slice(offset, offset+limit);
 
 const renderizacaoDeTabela = (guias) => {
 
     const imprimirGuias = document.querySelector('#minha-tabela');
-
     let html = '';
 
     guias.forEach(guia => {
@@ -190,20 +158,15 @@ const renderizacaoDeTabela = (guias) => {
 
     if (!guias.length) {
         html += '<tr><td colspan="6" style="text-align: center;">Nenhuma guia encontrada!</td></tr>'
-    };
+    }
+
     imprimirGuias.innerHTML = html;
 };
-renderizacaoDeTabela(items);
-// renderizacaoDeTabela(dadosGuias);
+renderizacaoDeTabela(dadosGuias);
 
-//-------------------------------------------------------Paginação--------------------------------------------------------------------------//
-
-// console.log(items);
-// console.log(pagination(page, total, limit));
-//------------------------------------------------------------------------------------------------------------------------------------------//
 const selecionarConvenio = (convenios) => {
 
-    const imprimirConvenios = document.querySelector('#convenio')
+    const imprimirConvenios = document.querySelector('#convenio');
     let html = `<option value="">Selecione</option>`;
 
     convenios.forEach(convenio => {
@@ -211,9 +174,9 @@ const selecionarConvenio = (convenios) => {
         <option value="${convenio.id}">${convenio.name}</option>
         `
     });
+
     imprimirConvenios.innerHTML = html;
 };
-
 selecionarConvenio(dadosConvenio);
 
 function filtrar() {
@@ -222,7 +185,7 @@ function filtrar() {
     const buscaNormalizada = buscarGuia.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
 
     if (!buscaNormalizada && !buscarConvenio) {
-        return renderizacaoDeTabela(items);
+        return renderizacaoDeTabela(dadosGuias);
     }
 
     const guiasFiltradas = dadosGuias.filter(guia => {
@@ -250,12 +213,4 @@ function filtrar() {
     });
 
     renderizacaoDeTabela(guiasFiltradas);
-
 };
-
-
-
-
-
-
-
